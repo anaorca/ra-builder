@@ -67,13 +67,21 @@ function suggestCriterion(verb:string, content:string, rubric:any[]){
   return 'cumpliendo los criterios de desempeño definidos (≥70%)'
 }
 
-function validateOutcome(text:string){
-  const issues:string[] = []
-  if (!/(será|sera|will) capaz de/.test(text)) issues.push(\"Usa la estructura '… será capaz de … / … will be able to …'\")
-  if (/(aprender|entender|conocer|learn|understand|know)\\b/i.test(text)) issues.push('Evita verbos no observables.')
-  if (!/(\\b≥|al menos|mínim[oa]|at least|minimum)/i.test(text)) issues.push('Añade un umbral medible.')
-  if (text.length < 80) issues.push('Añade más detalle para condición y evidencia.')
-  return issues
+function validateOutcome(text: string) {
+  const issues: string[] = [];
+  if (!/(será|sera|will) capaz de/.test(text)) {
+    issues.push("Usa la estructura '… será capaz de … / … will be able to …'");
+  }
+  if (/(aprender|entender|conocer|learn|understand|know)\b/i.test(text)) {
+    issues.push("Evita verbos no observables.");
+  }
+  if (!/(\b≥|al menos|mínim[oa]|at least|minimum)/i.test(text)) {
+    issues.push("Añade un umbral medible.");
+  }
+  if (text.length < 80) {
+    issues.push("Añade más detalle para condición y evidencia.");
+  }
+  return issues;
 }
 
 async function copyText(text:string, opts?:{forceFallback?:boolean}): Promise<{ok:boolean; method:'clipboard'|'execCommand'|'manual'; reason?:string}>{
